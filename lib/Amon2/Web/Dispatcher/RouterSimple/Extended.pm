@@ -26,6 +26,7 @@ sub import {
     };
 
     no strict 'refs';
+
     # functions
     *{"${caller}::connect"} = $connect;
     my @methods = qw/GET POST PUT DELETE/;
@@ -36,12 +37,13 @@ sub import {
         };
     }
 
-    *{"${caller}::submapper"} = sub {
+    use strict 'refs';
+
+    my $submapper = sub {
         if ($_[2] && ref($_[2]) eq 'CODE') {
             my ($path, $controller, $callback) = @_;
             my $submap = $router->submapper($path, { controller => $controller });
-            no warnings 'redefine';
-            *{"${caller}::connect"} = sub {
+            my $new_connect = sub {
                 if (@_ >= 2 && !ref $_[1]) {
                     my ($path, $action, $opt) = @_;
                     $submap->connect($path, { action => $action }, $opt || {});
@@ -49,13 +51,20 @@ sub import {
                     $submap->connect(@_);
                 }
             };
+            no strict 'refs';
+            no warnings 'redefine';
+            *{"${caller}::connect"} = $new_connect;
             for my $method (@methods) {
                 *{"${caller}::@{[lc $method]}"} = sub {
                     my ($path, $action) = @_;
                     $submap->connect($path, { action => $action }, { metod => $method });
                 };
             }
+            use strict 'refs';
+            use warnings 'redefine';
             $callback->();
+            no strict 'refs';
+            no warnings 'redefine';
             *{"${caller}::connect"} = $connect;
             *{"${caller}::@{[ lc $_ ]}"} = $procs{$_} for (@methods);
         }
@@ -63,6 +72,10 @@ sub import {
             $router->submapper(@_);
         }
     };
+
+    no strict 'refs';
+
+    *{"${caller}::submapper"} = $submapper;
     # class methods
     *{"${caller}::router"} = sub { $router };
     for my $meth (qw/match as_string/) {
