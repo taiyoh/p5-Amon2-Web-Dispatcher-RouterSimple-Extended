@@ -19,6 +19,8 @@ use Test::Requires 'Test::WWW::Mechanize::PSGI';
     package MyApp::Web::C::My;
     sub foo { Amon2->context->create_response(200, [], 'foo') }
 
+    sub bar { Amon2->context->create_response(200, [], 'bar') }
+
     package MyApp::Web::C::Bar;
     sub poo { Amon2->context->create_response(200, [], 'poo') }
 
@@ -53,6 +55,8 @@ use Test::Requires 'Test::WWW::Mechanize::PSGI';
     submapper '/account', 'Account', sub {
         get '/logout', 'logout';
     };
+
+    get '/my/bar', 'My#bar';
 }
 
 my $app = MyApp::Web->to_app();
@@ -70,6 +74,8 @@ $mech->get_ok('/account/login');
 $mech->content_is("login");
 $mech->get_ok('/account/logout');
 $mech->content_is("logout");
+$mech->get_ok('/my/bar');
+$mech->content_is('bar');
 
 done_testing;
 

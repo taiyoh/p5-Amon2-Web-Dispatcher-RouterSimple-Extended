@@ -7,6 +7,7 @@ our $VERSION = "0.02";
 use Router::Simple 0.03;
 
 my @METHODS = qw/GET POST PUT DELETE/;
+my $submap;
 
 sub import {
     my $class = shift;
@@ -41,10 +42,6 @@ sub _make_method_connector {
     sub {
         my $class = caller(0);
 
-        my $submap = do {
-            no strict 'refs';
-            ${"${caller}::_SUBMAPPER"};
-        };
         if ($submap) {
             my ($path, $action) = @_;
             $submap->connect($path, { action => $action }, { metod => $method });
@@ -57,10 +54,6 @@ sub _make_method_connector {
 
 sub _connect {
     my $caller = caller(0);
-    my $submap = do {
-        no strict 'refs';
-        ${"${caller}::_SUBMAPPER"};
-    };
     if ($submap) {
         if (@_ >= 2 && !ref $_[1]) {
             my ($path, $action, $opt) = @_;
@@ -70,7 +63,7 @@ sub _connect {
         }
     } else {
         my $router = $caller->router;
-        if (@_ == 2 && !ref $_[1]) {
+        if (@_ >= 2 && !ref $_[1]) {
             my ($path, $dest_str, $opt) = @_;
             my ($controller, $action) = split('#', $dest_str);
             my $dest = { controller => $controller };
@@ -87,10 +80,9 @@ sub _submapper {
     my $router = caller(0)->router();
     if ($_[2] && ref($_[2]) eq 'CODE') {
         my ($path, $controller, $callback) = @_;
-        my $submap = $router->submapper($path, { controller => $controller });
-        no strict 'refs';
-        local ${"${caller}::_SUBMAPPER"} = $submap;
+        $submap = $router->submapper($path, { controller => $controller });
         $callback->();
+        undef $submap;
     }
     else {
         $router->submapper(@_);
