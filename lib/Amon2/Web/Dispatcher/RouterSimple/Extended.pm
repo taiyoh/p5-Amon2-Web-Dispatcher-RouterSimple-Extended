@@ -2,9 +2,11 @@ package Amon2::Web::Dispatcher::RouterSimple::Extended;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Router::Simple 0.03;
+
+my @METHODS = qw/GET POST PUT DELETE/;
 
 sub import {
     my $class = shift;
@@ -13,7 +15,61 @@ sub import {
 
     my $router = Router::Simple->new;
 
-    my $connect = sub {
+    no strict 'refs';
+
+    # functions
+    *{"${caller}::submapper"} = \&_submapper;
+    *{"${caller}::connect"} = \&_connect;
+    for my $method (@METHODS) {
+        *{"${caller}::@{[lc $method]}"} = _make_method_connector($caller, $method);
+    }
+
+    # class methods
+    *{"${caller}::router"} = sub { $router };
+    for my $meth (qw/match as_string/) {
+        *{"$caller\::${meth}"} = sub {
+            my $class = shift;
+            $class->router->$meth(@_)
+        };
+    }
+    *{"$caller\::dispatch"} = \&_dispatch;
+}
+
+sub _make_method_connector {
+    my ($caller, $method) = @_;
+
+    sub {
+        my $class = caller(0);
+
+        my $submap = do {
+            no strict 'refs';
+            ${"${caller}::_SUBMAPPER"};
+        };
+        if ($submap) {
+            my ($path, $action) = @_;
+            $submap->connect($path, { action => $action }, { metod => $method });
+        } else {
+            $_[2] = { method => $method };
+            goto \&_connect;
+        }
+    }
+}
+
+sub _connect {
+    my $caller = caller(0);
+    my $submap = do {
+        no strict 'refs';
+        ${"${caller}::_SUBMAPPER"};
+    };
+    if ($submap) {
+        if (@_ >= 2 && !ref $_[1]) {
+            my ($path, $action, $opt) = @_;
+            $submap->connect($path, { action => $action }, $opt || {});
+        } else {
+            $submap->connect(@_);
+        }
+    } else {
+        my $router = $caller->router;
         if (@_ == 2 && !ref $_[1]) {
             my ($path, $dest_str, $opt) = @_;
             my ($controller, $action) = split('#', $dest_str);
@@ -23,68 +79,22 @@ sub import {
         } else {
             $router->connect(@_);
         }
-    };
-
-    no strict 'refs';
-
-    # functions
-    *{"${caller}::connect"} = $connect;
-    my @methods = qw/GET POST PUT DELETE/;
-    my %procs;
-    for my $method (@methods) {
-        *{"${caller}::@{[lc $method]}"} = $procs{$method} = sub {
-            $connect->($_[0], $_[1], { method => $method });
-        };
     }
+}
 
-    use strict 'refs';
-
-    my $submapper = sub {
-        if ($_[2] && ref($_[2]) eq 'CODE') {
-            my ($path, $controller, $callback) = @_;
-            my $submap = $router->submapper($path, { controller => $controller });
-            my $new_connect = sub {
-                if (@_ >= 2 && !ref $_[1]) {
-                    my ($path, $action, $opt) = @_;
-                    $submap->connect($path, { action => $action }, $opt || {});
-                } else {
-                    $submap->connect(@_);
-                }
-            };
-            no strict 'refs';
-            no warnings 'redefine';
-            *{"${caller}::connect"} = $new_connect;
-            for my $method (@methods) {
-                *{"${caller}::@{[lc $method]}"} = sub {
-                    my ($path, $action) = @_;
-                    $submap->connect($path, { action => $action }, { metod => $method });
-                };
-            }
-            use strict 'refs';
-            use warnings 'redefine';
-            $callback->();
-            no strict 'refs';
-            no warnings 'redefine';
-            *{"${caller}::connect"} = $connect;
-            *{"${caller}::@{[ lc $_ ]}"} = $procs{$_} for (@methods);
-        }
-        else {
-            $router->submapper(@_);
-        }
-    };
-
-    no strict 'refs';
-
-    *{"${caller}::submapper"} = $submapper;
-    # class methods
-    *{"${caller}::router"} = sub { $router };
-    for my $meth (qw/match as_string/) {
-        *{"$caller\::${meth}"} = sub {
-            my $self = shift;
-            $router->$meth(@_)
-        };
+sub _submapper {
+    my $caller = caller(0);
+    my $router = caller(0)->router();
+    if ($_[2] && ref($_[2]) eq 'CODE') {
+        my ($path, $controller, $callback) = @_;
+        my $submap = $router->submapper($path, { controller => $controller });
+        no strict 'refs';
+        local ${"${caller}::_SUBMAPPER"} = $submap;
+        $callback->();
     }
-    *{"$caller\::dispatch"} = \&_dispatch;
+    else {
+        $router->submapper(@_);
+    }
 }
 
 sub _dispatch {
