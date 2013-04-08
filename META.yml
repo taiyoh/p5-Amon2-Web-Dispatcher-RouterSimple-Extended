@@ -1,0 +1,29 @@
+---
+abstract: 'extending Amon2::Web::Dispatcher::RouterSimple'
+author:
+  - taiyoh
+build_requires:
+  ExtUtils::MakeMaker: 6.36
+  Test::More: 0.88
+  Test::Requires: 0.06
+configure_requires:
+  ExtUtils::MakeMaker: 6.36
+distribution_type: module
+dynamic_config: 1
+generated_by: 'Module::Install version 1.06'
+license: unknown
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: Amon2::Web::Dispatcher::RouterSimple::Extended
+name: Amon2-Web-Dispatcher-RouterSimple-Extended
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Amon2: 0
+  Router::Simple: 0.03
+resources:
+  repository: https://github.com/taiyoh/p5-Amon2-Web-Dispatcher-RouterSimple-Extended.git
+version: 0.01

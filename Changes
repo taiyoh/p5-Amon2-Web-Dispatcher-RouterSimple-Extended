@@ -1,6 +1,6 @@
 Revision history for Perl extension Amon2-Web-Dispatcher-RouterSimple-Extended
 
-{{$NEXT}}
+0.01
 
-    - original version
+    - original version (refactored by tokuhirom)
 
