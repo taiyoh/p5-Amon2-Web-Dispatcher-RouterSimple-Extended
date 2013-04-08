@@ -1,10 +1,10 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "extending Amon2::Web::Dispatcher::RouterSimple",
    "author" : [
-      "taiyoh <sun.basix@gmail.com>"
+      "unknown"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.0.50, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -15,42 +15,27 @@
    "name" : "Amon2-Web-Dispatcher-RouterSimple-Extended",
    "no_index" : {
       "directory" : [
-         "t",
-         "xt",
-         "inc",
-         "share",
-         "eg",
-         "examples"
+         "inc"
       ]
    },
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "CPAN::Meta" : "0",
-            "CPAN::Meta::Prereqs" : "0",
             "Module::Build" : "0.38"
-         }
-      },
-      "develop" : {
-         "requires" : {
-            "Pod::Wordlist::hanekomu" : "0",
-            "Test::CPAN::Meta" : "0",
-            "Test::MinimumVersion" : "0.10108",
-            "Test::Pod" : "1.41",
-            "Test::Spelling" : "0"
-         }
-      },
-      "runtime" : {
-         "requires" : {
-            "perl" : "5.008005"
-         }
-      },
-      "test" : {
-         "requires" : {
-            "Test::More" : "0.98"
          }
       }
    },
-   "release_status" : "unstable",
+   "provides" : {
+      "Amon2::Web::Dispatcher::RouterSimple::Extended" : {
+         "file" : "lib/Amon2/Web/Dispatcher/RouterSimple/Extended.pm",
+         "version" : "0.01"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
    "version" : "0.01"
 }

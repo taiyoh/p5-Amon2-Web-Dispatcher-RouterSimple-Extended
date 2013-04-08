@@ -1,3 +1,5 @@
+.dimconfig
+.shipit
 .travis.yml
 Build.PL
 Changes
