@@ -1,7 +1,7 @@
 {
    "abstract" : "extending Amon2::Web::Dispatcher::RouterSimple",
    "author" : [
-      "unknown"
+      "Taiyoh Tanaka <sun.basix@gmail.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.120921",

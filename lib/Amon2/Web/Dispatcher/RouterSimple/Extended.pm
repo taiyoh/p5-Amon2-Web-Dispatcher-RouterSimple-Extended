@@ -138,6 +138,8 @@ This is an extension of Amon2::Web::Dispatcher::RouterSimple. 100% compatible, a
 
 =head1 METHODS
 
+=over 4
+
 =item get $path, "${controller}#${action}"
 
 this is equivalent to 'connect $path, { controller => $controller, action => $action }, { method => 'GET' };'
@@ -161,7 +163,7 @@ this is main feature of this module. In subroutine of the third argument, connec
 =back
 
 
-=Head1 LICENSE
+=head1 LICENSE
 
 Copyright (C) taiyoh
 
