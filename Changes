@@ -1,5 +1,9 @@
 Revision history for Perl extension Amon2-Web-Dispatcher-RouterSimple-Extended
 
+0.03
+
+    - fixed get/post/put/delete functions and set $submap for instance caching
+
 0.02
 
     - refactored by tokuhirom

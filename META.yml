@@ -18,7 +18,7 @@ no_index:
 provides:
   Amon2::Web::Dispatcher::RouterSimple::Extended:
     file: lib/Amon2/Web/Dispatcher/RouterSimple/Extended.pm
-    version: 0.02
+    version: 0.03
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
