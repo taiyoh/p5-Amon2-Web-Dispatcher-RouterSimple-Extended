@@ -1,7 +1,7 @@
 ---
 abstract: 'extending Amon2::Web::Dispatcher::RouterSimple'
 author:
-  - 'Tanaka Taiyoh <sun.basix@gmail.com>'
+  - unknown
 build_requires: {}
 configure_requires:
   Module::Build: 0.38
