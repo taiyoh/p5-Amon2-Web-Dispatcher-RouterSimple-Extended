@@ -3,6 +3,7 @@ Amon2-Web-Dispatcher-RouterSimple-Extended-*
 !.git*
 !.shipit
 !.dimconfig
+carton.lock
 inc/
 *.o
 *.obj
@@ -26,3 +27,4 @@ cover_db*
 *.stackdump
 Build
 _build/
+local/
