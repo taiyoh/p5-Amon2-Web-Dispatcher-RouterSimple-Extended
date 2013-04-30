@@ -26,6 +26,8 @@ use inc::Module::Install;
 
 all_from 'lib/Amon2/Web/Dispatcher/RouterSimple/Extended.pm';
 
+author 'Taiyoh Tanaka <sun.basix@gmail.com>';
+
 requires 'Amon2';
 requires 'Router::Simple' => '0.03';
 

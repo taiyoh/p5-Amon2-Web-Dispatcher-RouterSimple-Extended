@@ -2,7 +2,7 @@ package Amon2::Web::Dispatcher::RouterSimple::Extended;
 use strict;
 use warnings;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 use Router::Simple 0.03;
 
@@ -144,19 +144,31 @@ This is an extension of Amon2::Web::Dispatcher::RouterSimple. 100% compatible, a
 
 =item get $path, "${controller}#${action}"
 
-this is equivalent to 'connect $path, { controller => $controller, action => $action }, { method => 'GET' };'
+this is equivalent to:
+
+    connect $path, { controller => $controller, action => $action }, { method => 'GET' };
+
 
 =item post $path, "${controller}#${action}"
 
-this is equivalent to 'connect $path, { controller => $controller, action => $action }, { method => 'POST' };'
+this is equivalent to:
+
+    connect $path, { controller => $controller, action => $action }, { method => 'POST' };
+
 
 =item put $path, "${controller}#${action}"
 
-this is equivalent to 'connect $path, { controller => $controller, action => $action }, { method => 'PUT' };'
+this is equivalent to:
+
+    connect $path, { controller => $controller, action => $action }, { method => 'PUT' };
+
 
 =item delete $path, "${controller}#${action}"
 
-this is equivalent to 'connect $path, { controller => $controller, action => $action }, { method => 'DELETE' };'
+this is equivalent to:
+
+    connect $path, { controller => $controller, action => $action }, { method => 'DELETE' };
+
 
 =item submapper $path, $controller, sub {}
 
@@ -167,15 +179,15 @@ this is main feature of this module. In subroutine of the third argument, connec
 
 =head1 LICENSE
 
-Copyright (C) taiyoh
+Copyright (C) Taiyoh Tanaka
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-taiyoh
+Taiyoh Tanaka <sun.basix@gmail.com>
 
 =head1 SEE ALSO
 
-L<Amon2::Web::Dispatcher::RouterSimple>
+L<Amon2::Web::Dispatcher::RouterSimple|http://search.cpan.org/~tokuhirom/Amon2/lib/Amon2/Web/Dispatcher/RouterSimple.pm>
