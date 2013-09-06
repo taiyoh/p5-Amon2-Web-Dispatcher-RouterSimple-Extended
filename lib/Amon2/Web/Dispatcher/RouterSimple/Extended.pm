@@ -44,7 +44,7 @@ sub _make_method_connector {
 
         if ($submap) {
             my ($path, $action) = @_;
-            $submap->connect($path, { action => $action }, { method => $method });
+            $submap->connect($path, { action => $action }, { metod => $method });
         } else {
             $_[2] = { method => $method };
             goto \&_connect;
