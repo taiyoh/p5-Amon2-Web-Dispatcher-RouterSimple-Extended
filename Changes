@@ -1,5 +1,9 @@
 Revision history for Perl extension Amon2-Web-Dispatcher-RouterSimple-Extended
 
+0.05
+ 
+    - fixed typo. thanks @zakame
+
 0.04
 
     - edited pod & 'Test::Requires' append to cpanfile
