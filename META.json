@@ -4,7 +4,7 @@
       "Taiyoh Tanaka <sun.basix@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Module::Build version 0.4007, CPAN::Meta::Converter version 2.132140",
    "license" : [
       "perl_5"
    ],
@@ -28,7 +28,7 @@
    "provides" : {
       "Amon2::Web::Dispatcher::RouterSimple::Extended" : {
          "file" : "lib/Amon2/Web/Dispatcher/RouterSimple/Extended.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       }
    },
    "release_status" : "stable",
@@ -37,5 +37,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
