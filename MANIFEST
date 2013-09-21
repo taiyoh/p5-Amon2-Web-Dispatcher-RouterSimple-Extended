@@ -1,7 +1,6 @@
 .dimconfig
 .shipit
 .travis.yml
-Build.PL
 Changes
 cpanfile
 inc/Module/Install.pm
