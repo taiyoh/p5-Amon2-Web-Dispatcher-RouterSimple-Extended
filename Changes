@@ -1,5 +1,9 @@
 Revision history for Perl extension Amon2-Web-Dispatcher-RouterSimple-Extended
 
+0.05.01
+
+    - remove Build.PL
+
 0.05
  
     - fixed typo. thanks @zakame
