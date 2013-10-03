@@ -1,5 +1,10 @@
 Revision history for Perl extension Amon2-Web-Dispatcher-RouterSimple-Extended
 
+0.06
+
+    - Apply fix of typo (should have been in 0.05 but was reverted)
+    - Bump version as 0.05.01 is not a legal CPAN version number
+
 0.05.01
 
     - remove Build.PL
